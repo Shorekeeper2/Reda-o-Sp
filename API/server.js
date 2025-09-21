@@ -1,5 +1,5 @@
 const CONFIG = {
-    MANUTENCAO: false, 
+    MANUTENCAO: true, 
     API_URL: 'http://localhost:3000/api/buscar-redacao',
 };
 
@@ -190,3 +190,4 @@ function formatarData(data) {
         day: '2-digit', month: '2-digit', year: 'numeric'
     });
 }
+
