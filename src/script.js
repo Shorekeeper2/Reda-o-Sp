@@ -1,10 +1,6 @@
-
 const CONFIG = {
-  
     MANUTENCAO: true, 
-    
     API_URL: 'https://reda-o-sp.vercel.app/',
-    
 };
 
 document.getElementById('VerSenha').addEventListener('click', function() {
@@ -21,13 +17,11 @@ document.getElementById('VerSenha').addEventListener('click', function() {
 });
 
 function showNotification(title, message, duration = 5000) {
-    // Remove notificação existente se houver
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
         existingNotification.remove();
     }
 
-    
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.innerHTML = `
@@ -38,12 +32,10 @@ function showNotification(title, message, duration = 5000) {
 
     document.body.appendChild(notification);
 
-    // Mostra a notificação
     setTimeout(() => {
         notification.classList.add('show');
     }, 100);
 
-    // Função para fechar notificação
     const closeBtn = notification.querySelector('.close-btn');
     const closeNotification = () => {
         notification.classList.remove('show');
@@ -55,19 +47,15 @@ function showNotification(title, message, duration = 5000) {
     };
 
     closeBtn.addEventListener('click', closeNotification);
-
-    // Auto close
     setTimeout(closeNotification, duration);
 }
 
-// Função para restaurar botão
 function restaurarBotao() {
     const button = document.getElementById('Logar');
     button.textContent = 'BUSCAR REDAÇÃO';
     button.disabled = false;
 }
 
-// Manipular envio do formulário
 document.getElementById('Enviar').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -83,7 +71,6 @@ document.getElementById('Enviar').addEventListener('submit', function(e) {
         return;
     }
 
-    // Verificar se está em manutenção
     if (CONFIG.MANUTENCAO) {
         showNotification(
             'Sistema em Manutenção',
@@ -93,21 +80,17 @@ document.getElementById('Enviar').addEventListener('submit', function(e) {
         return;
     }
 
-    // Chama função para buscar redação
     fetchRedacao(ra, senha);
 });
 
-// Função para buscar redação
 async function fetchRedacao(ra, senha) {
     const button = document.getElementById('Logar');
     const originalText = button.textContent;
     
     try {
-        // Mostrar loading
         button.textContent = 'Buscando...';
         button.disabled = true;
 
-        // Fazer requisição para API
         const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
@@ -116,7 +99,6 @@ async function fetchRedacao(ra, senha) {
             body: JSON.stringify({ ra, senha })
         });
 
-        // Verificar se a resposta foi bem sucedida
         if (!response.ok) {
             if (response.status === 401) {
                 throw new Error('Credenciais inválidas');
@@ -130,7 +112,6 @@ async function fetchRedacao(ra, senha) {
         const data = await response.json();
 
         if (data.success) {
-            // Mostrar redações encontradas
             displayRedacoes(data.redacoes);
             showNotification(
                 'Redações Encontradas',
@@ -143,7 +124,6 @@ async function fetchRedacao(ra, senha) {
     } catch (error) {
         console.error('Erro ao buscar redação:', error);
         
-        // Verificar tipo de erro e mostrar mensagem apropriada
         if (error.name === 'TypeError' && error.message.includes('fetch')) {
             showNotification(
                 'Erro de Conexão',
@@ -170,12 +150,10 @@ async function fetchRedacao(ra, senha) {
             );
         }
     } finally {
-        // Sempre restaurar o botão
         restaurarBotao();
     }
 }
 
-// Função para exibir redações na tela
 function displayRedacoes(redacoes) {
     const container = document.getElementById('TamanhoN');
     
@@ -216,7 +194,6 @@ function displayRedacoes(redacoes) {
     `;
 }
 
-// Função para formatar data
 function formatarData(data) {
     if (!data) return 'Data não disponível';
     
@@ -228,22 +205,17 @@ function formatarData(data) {
     });
 }
 
-// Função para limpar resultados
 function limparResultados() {
     document.getElementById('TamanhoN').innerHTML = '';
 }
 
-// Função para ativar/desativar manutenção (usar no console do navegador)
 window.toggleManutencao = function() {
     CONFIG.MANUTENCAO = !CONFIG.MANUTENCAO;
     console.log('Manutenção:', CONFIG.MANUTENCAO ? 'ATIVADA' : 'DESATIVADA');
     return CONFIG.MANUTENCAO;
 };
 
-// Função para alterar URL da API (usar no console do navegador)
 window.setApiUrl = function(url) {
     CONFIG.API_URL = url;
     console.log('Nova URL da API:', url);
-
 };
-
