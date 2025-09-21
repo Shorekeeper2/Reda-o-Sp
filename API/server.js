@@ -1,6 +1,6 @@
 const CONFIG = {
     MANUTENCAO: true, 
-    PI_URL: 'https://bot-redacao.vercel.app/api/buscar-redacao'
+    PI_URL: 'https://reda-o-sp.vercel.app/'
 };
 
 // Mostrar/Ocultar senha
@@ -190,3 +190,4 @@ function formatarData(data) {
         day: '2-digit', month: '2-digit', year: 'numeric'
     });
 }
+
