@@ -1,7 +1,7 @@
 
 const CONFIG = {
   
-    MANUTENCAO: false, 
+    MANUTENCAO: true, 
     
     API_URL: 'https://reda-o-sp.vercel.app/',
     
@@ -246,3 +246,4 @@ window.setApiUrl = function(url) {
     console.log('Nova URL da API:', url);
 
 };
+
