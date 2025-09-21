@@ -1,9 +1,9 @@
 
 const CONFIG = {
   
-    MANUTENCAO: true, 
+    MANUTENCAO: false, 
     
-    API_URL: 'http://localhost:3000/api/buscar-redacao',
+    API_URL: 'https://reda-o-sp.vercel.app/',
     
 };
 
@@ -244,4 +244,5 @@ window.toggleManutencao = function() {
 window.setApiUrl = function(url) {
     CONFIG.API_URL = url;
     console.log('Nova URL da API:', url);
+
 };
